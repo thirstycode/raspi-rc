@@ -2,20 +2,21 @@ import bluetooth
 import time
 import RPi.GPIO as GPIO
 
-m11=18
-m12=23
-m21=24
-m22=25
+left_gpio=16
+right_gpio=18
+forward_gpio=19
+reverse_gpio=21
+
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(m11, GPIO.OUT)
-GPIO.setup(m12, GPIO.OUT)
-GPIO.setup(m21, GPIO.OUT)
-GPIO.setup(m22, GPIO.OUT)
-GPIO.output(m11 , 0)
-GPIO.output(m12 , 0)
-GPIO.output(m21, 0)
-GPIO.output(m22, 0)
+GPIO.setup(left_gpio, GPIO.OUT)
+GPIO.setup(right_gpio, GPIO.OUT)
+GPIO.setup(forward_gpio, GPIO.OUT)
+GPIO.setup(reverse_gpio, GPIO.OUT)
+GPIO.output(left_gpio , 0)
+GPIO.output(right_gpio , 0)
+GPIO.output(forward_gpio, 0)
+GPIO.output(reverse_gpio, 0)
 
 server_socket=bluetooth.BluetoothSocket( bluetooth.RFCOMM ) 
 port = 1
@@ -27,57 +28,57 @@ print "Accepted connection from ",address
 
 def left_side_forward():
     print "FORWARD LEFT"
-    GPIO.output(m21 , 1)
-    GPIO.output(m22 , 0)
+    GPIO.output(forward_gpio , 1)
+    GPIO.output(reverse_gpio , 0)
     time.sleep(.5)
-    GPIO.output(m11 , 1)
-    GPIO.output(m12 , 0)
+    GPIO.output(left_gpio , 1)
+    GPIO.output(right_gpio , 0)
 
 def right_side_forward():
    print "FORWARD RIGHT"
-   GPIO.output(m21 , 1)
-   GPIO.output(m22 , 0)
+   GPIO.output(forward_gpio , 1)
+   GPIO.output(reverse_gpio , 0)
    time.sleep(.5)
-   GPIO.output(m11 , 0)
-   GPIO.output(m12 , 1)
+   GPIO.output(left_gpio , 0)
+   GPIO.output(right_gpio , 1)
 
 def forward():
    print "FORWARD"
-   GPIO.output(m11 , 0)
-   GPIO.output(m12 , 0)
-   GPIO.output(m21 , 1)
-   GPIO.output(m22 , 0)
+   GPIO.output(left_gpio , 0)
+   GPIO.output(right_gpio , 0)
+   GPIO.output(forward_gpio , 1)
+   GPIO.output(reverse_gpio , 0)
 
 def left_side_reverse():
    print "BACKWARD LEFT"
-   GPIO.output(m21 , 0)
-   GPIO.output(m22 , 1)
+   GPIO.output(forward_gpio , 0)
+   GPIO.output(reverse_gpio , 1)
    time.sleep(.5)
-   GPIO.output(m11 , 1)
-   GPIO.output(m12 , 0)
+   GPIO.output(left_gpio , 1)
+   GPIO.output(right_gpio , 0)
 
 def right_side_reverse():
    print "BACKWARD RIGHT"
 
-   GPIO.output(m21 , 0)
-   GPIO.output(m22 , 1)
+   GPIO.output(forward_gpio , 0)
+   GPIO.output(reverse_gpio , 1)
    time.sleep(.5)
-   GPIO.output(m11 , 0)
-   GPIO.output(m12 , 1)
+   GPIO.output(left_gpio , 0)
+   GPIO.output(right_gpio , 1)
 
 def reverse():
    print "BACKWARD"
-   GPIO.output(m11 , 0)
-   GPIO.output(m12 , 0)
-   GPIO.output(m21 , 0)
-   GPIO.output(m22 , 1)
+   GPIO.output(left_gpio , 0)
+   GPIO.output(right_gpio , 0)
+   GPIO.output(forward_gpio , 0)
+   GPIO.output(reverse_gpio , 1)
 
 def stop():
    print "STOP"
-   GPIO.output(m11 , 0)
-   GPIO.output(m12 , 0)
-   GPIO.output(m21 , 0)
-   GPIO.output(m22 , 0)
+   GPIO.output(left_gpio , 0)
+   GPIO.output(right_gpio , 0)
+   GPIO.output(forward_gpio , 0)
+   GPIO.output(reverse_gpio , 0)
  
 data=""
 while 1:
